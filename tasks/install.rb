@@ -41,15 +41,6 @@ namespace :install do
     Utils.create_symbolic_link
   end
 
-  desc 'Debian installation'
-  task :debian do
-    names = %w[make gcc build-essential ruby-dev]
-    names.each { |name| system("apt install -y #{name}") }
-    Rake::Task['install:gems'].invoke
-    Rake::Task['install:devel'].invoke
-    Utils.create_symbolic_link
-  end
-
   desc 'Install developer gems'
   task :devel do
     puts '[INFO] Installing developer Ruby gems...'
