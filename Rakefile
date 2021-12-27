@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+require_relative 'tasks/build'
+require_relative 'tasks/install'
+
+# Define tasks
+desc 'Default action => check & build'
+task :default do
+  Rake::Task['install:check'].invoke
+end
+
+desc 'Show rake help'
+task :help do
+  system('rake -T')
+end
