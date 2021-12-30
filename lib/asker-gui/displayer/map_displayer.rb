@@ -17,12 +17,10 @@ module MapDisplayer
       if d.type.size.zero?
         puts "  def  : #{d.value}"
       else
-        puts "  def {type: #{d.type}} : #{d.value}"
+        puts "  def  : {type: #{d.type}} #{d.value}"
       end
     end
-    concept.tables.each do |t|
-      puts "  table {fields: #{t.fields}, sequence: #{t.sequence}"
-    end
+    concept.tables.each { |t| show_table(t) }
   end
 
   def self.show_code(code)
@@ -35,6 +33,13 @@ module MapDisplayer
       code.features.each do |value|
         puts "    row : #{value}"
       end
+    end
+  end
+
+  def self.show_table(table)
+    puts "  table: {fields: #{table.fields}, sequence: #{table.sequence}}"
+    table.rows.each do |row|
+      puts "     - #{row.cols}"
     end
   end
 

@@ -13,9 +13,9 @@ module TableBuilder
     fields.each(&:strip!)
     fields = fields || []
 
-    sequence = []
+    sequence = ''
     if xmldata.attributes['sequence']
-      sequence = xmldata.attributes['sequence'].to_s.split(',')
+      sequence = xmldata.attributes['sequence'].to_s.strip
     end
 
     table_data = TableData.new(fields: fields,
