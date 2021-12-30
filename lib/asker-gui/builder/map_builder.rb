@@ -4,6 +4,7 @@ require 'rainbow'
 require 'rexml/document'
 require_relative '../data/map_data'
 require_relative 'concept_builder'
+require_relative 'code_builder'
 
 module MapBuilder
   def self.build(content)
