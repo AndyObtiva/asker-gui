@@ -1,102 +1,51 @@
 # frozen_string_literal: true
 
-require 'rainbow'
 require 'rexml/document'
-require_relative '../data/concept'
-require_relative 'code_loader'
-require_relative '../data/project_data'
+require_relative 'def_data'
+require_relative 'table_data'
 
-module InputBuilder
-  ##
-  # Load XML content into Asker data objects
-  # @param filepath (String) File path
-  # @param content (String) XML plane text content
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  def self.load(filepath, xml_content)
-    concepts = []
-    codes = []
-    begin
-      xmlcontent = REXML::Document.new(content)
-    rescue REXML::ParseException
-      raise_error_with(filepath, content)
-    end
-    lang = read_lang_attribute(xmlcontent)
-    context = read_context_attribute(xmlcontent)
+module ConceptBuilder
 
-    xmlcontent.root.elements.each do |xmldata|
-      case xmldata.name
-      when 'concept'
-        concepts << read_concept(xmldata, filepath, lang, context)
-      when 'code'
-        codes << read_code(xmldata, filepath)
+  def build(xml_data)
+    xml_data.elements.each do |i|
+      case i.name
+      when 'names'
+        names = process_names(i)
+      when 'tags'
+        tags += process_tags(i)
+      when 'def'
+        datadef += process_def(i)
+      when 'table'
+        tables += [TableBuilder.buildData.new(i)]
       else
-        puts Rainbow("[ERROR] Unkown tag <#{xmldata.name}>").red
+        raise "[ERROR] Concept #{name} with unkown attribute: #{i.name}"
       end
     end
-
-    { concepts: concepts, codes: codes }
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
-  ##
-  # Read lang attr from input XML data
-  # @param xmldata (XML Object)
-  private_class_method def self.read_lang_attribute(xmldata)
-    begin
-      lang = xmldata.root.attributes['lang']
-    rescue StandardError
-      lang = ProjectData.instance.lang
+  def process_names(value)
+    names = []
+    values = value.text.split(',')
+    values.each { |item| names << item.strip }
+    names
+  end
+
+  def process_tags(value)
+    if value.text.nil? || value.text.size.zero?
+      raise("[ERROR] Concept #{name} has tags empty!")
     end
-    lang
+
+    tags = value.text.split(',')
+    tags.collect!(&:strip)
   end
 
-  ##
-  # Read context attr from input XML data
-  # @param xmldata (XML Object)
-  private_class_method def self.read_context_attribute(xmldata)
-    begin
-      context = xmldata.root.attributes['context']
-    rescue StandardError
-      context = 'unknown'
+  def process_def(value)
+    type = value.attributes['type']
+    if type == 'image_url' or type == 'file' or type.nil?
+      value = value.text.strip
+      return [DefData.new(:type => type, :value => value)]
+    else
+      raise "[ERROR] Unknown type: #{value.attributes['type']}"
     end
-    context
-  end
-
-  ##
-  # Read concept from input XML data
-  # @param xmldata (XML Object)
-  # @param filepath (String)
-  # @param lang
-  # @param context
-  private_class_method def self.read_concept(xmldata, filepath, lang, context)
-    project = ProjectData.instance
-    c = Concept.new(xmldata, filepath, lang, context)
-    c.process = true if [File.basename(filepath), :default].include? project.get(:process_file)
-    c
-  end
-
-  ##
-  # Read code from input XML data
-  # @param xmldata (XML Object)
-  # @param filepath (String)
-  private_class_method def self.read_code(xmldata, filepath)
-    project = ProjectData.instance
-    c = CodeLoader.load(xmldata, filepath)
-    c.process = true if [File.basename(filepath), :default].include? project.get(:process_file)
-    c
-  end
-
-  ##
-  # Raise error and save content into error.file
-  # @param filepath (String)
-  # @param content (String)
-  private_class_method def self.raise_error_with(filepath, content)
-    puts Rainbow("[ERROR] ContentLoader: Format error in #{filepath}").red.bright
-    f = File.open('output/error.xml', 'w')
-    f.write(content)
-    f.close
-    raise msg
   end
 end
