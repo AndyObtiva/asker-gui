@@ -3,6 +3,7 @@
 require 'rainbow'
 require 'rexml/document'
 require_relative '../data/map_data'
+require_relative 'concept_builder'
 
 module MapBuilder
   def self.build(content)
@@ -15,16 +16,16 @@ module MapBuilder
     context = read_context_attribute(xmlcontent)
     version = read_version_attribute(xmlcontent)
 
-    map_data = MapData.new( :lang => lang,
-                            :conext => context,
-                            :version => version )
+    map_data = MapData.new( lang: lang,
+                            context: context,
+                            version: version )
 
     xmlcontent.root.elements.each do |xmldata|
       case xmldata.name
       when 'concept'
-        map_data.concepts << ConceptBuilder(xmldata)
+        map_data.concepts << ConceptBuilder.build(xmldata)
       when 'code'
-        map_data.codes << CodeBuilder(xmldata)
+        map_data.codes << CodeBuilder.build(xmldata)
       else
         raise("[ERROR] Unkown tag <#{xmldata.name}>")
       end

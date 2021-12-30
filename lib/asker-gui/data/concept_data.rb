@@ -5,7 +5,8 @@ class ConceptData
   attr_reader :defs
   attr_reader :tables
 
-  def initialize
+  def initialize(args)
+    @parent = args[:parent]
     @names = []
     @tags = []
     @defs = []

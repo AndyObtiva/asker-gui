@@ -1,11 +1,12 @@
 
 class TableData
-  attr_reader :fields
-  attr_reader :secuence
-  attr_reader :rows
-  attr_reader :templates
+  attr_accessor :fields
+  attr_accessor :sequence
+  attr_accessor :rows
+  attr_accessor :templates
 
-  def initialize
+  def initialize(args)
+    @parent = args[:parent]
     @fields = []
     @sequence = nil
     @rows = []
