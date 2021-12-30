@@ -5,17 +5,21 @@ require_relative '../data/row_data'
 
 module TemplateBuilder
 
-  def self.build(xml)
-    var_name = xml.attributes.keys.first
-    var_values = xml.attributes[0].split(',')
+  def self.build(args)
+    xmldata = args[:xmldata]
+    parent = args[:parent]
 
+    var_name = xmldata.attributes.keys.first
+    var_values = xmldata.attributes[0].split(',')
     rows = []
 
-    xml.root.elements.each do |i|
-      rows += RowBuild.build(i)
+    xmldata.root.elements.each do |i|
+      rows += RowBuild.build(xmldata: i, parent: parent)
     end
 
-    template_data = TemplateData.new(var_name: var_name, var_values: var_values)
+    template_data = TemplateData.new(var_name: var_name,
+                                     var_values: var_values,
+                                     parent: parent)
     template_data.rows = rows
     template_data
   end

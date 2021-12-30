@@ -4,7 +4,7 @@ class DefData
 
   def initialize(args)
     @parent = args[:parent]
-    @type = args[:type]
+    @type = args[:type] || ''
     @value = args[:value]
   end
 end

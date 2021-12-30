@@ -23,9 +23,9 @@ module MapBuilder
     xmlcontent.root.elements.each do |xmldata|
       case xmldata.name
       when 'concept'
-        map_data.concepts << ConceptBuilder.build(xmldata)
+        map_data.concepts << ConceptBuilder.build(xmldata: xmldata, parent: map_data)
       when 'code'
-        map_data.codes << CodeBuilder.build(xmldata)
+        map_data.codes << CodeBuilder.build(xmldata: xmldata, parent: map_data)
       else
         raise("[ERROR] Unkown tag <#{xmldata.name}>")
       end
