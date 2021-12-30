@@ -2,7 +2,7 @@
 
 require "gtk3"
 
-builder_file = "#{File.expand_path(File.dirname(__FILE__))}/../glade/asker-gui.glade"
+builder_file = "#{File.expand_path(File.dirname(__FILE__))}/demo1.glade"
 
 # Construct a Gtk::Builder instance and load our UI description
 builder = Gtk::Builder.new(:file => builder_file)
