@@ -10,29 +10,23 @@ module ConceptBuilder
   def self.build(args)
     xmldata = args[:xmldata]
     parent = args[:parent]
-    names = []
-    tags = []
-    datadefs = []
-    tables = []
+    concept_data = ConceptData.new(parent: parent)
+
     xmldata.elements.each do |i|
       case i.name
       when 'names'
-        names = process_names(i)
+        concept_data.names = process_names(i)
       when 'tags'
-        tags += process_tags(i)
+        concept_data.tags += process_tags(i)
       when 'def'
-        datadefs += process_def(xmldata: i, parent: parent)
+        concept_data.defs += process_def(xmldata: i, concept_data: concept_data)
       when 'table'
-        tables += [TableBuilder.build(xmldata: i, parent: parent)]
+        concept_data.tables += [TableBuilder.build(xmldata: i, concept_data: concept_data)]
       else
         raise "[ERROR] Concept #{name} with unkown attribute: #{i.name}"
       end
     end
-    concept_data = ConceptData.new(names: names,
-                                   tags: tags,
-                                   defs: datadefs,
-                                   tables: tables,
-                                   parent: parent)
+
     concept_data
   end
 
@@ -54,11 +48,11 @@ module ConceptBuilder
 
   def self.process_def(args)
     xmldata = args[:xmldata]
-    parent = args[:parent]
+    concept_data = args[:concept_data]
     type = xmldata.attributes['type']
     if type == 'image_url' or type == 'file' or type.nil?
       value = xmldata.text.strip
-      return [DefData.new(type: type, value: value, parent: parent)]
+      return [DefData.new(type: type, value: value, parent: concept_data)]
     else
       raise "[ERROR] Unknown type: #{value.attributes['type']}"
     end
