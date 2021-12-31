@@ -19,9 +19,9 @@ module ConceptBuilder
       when 'tags'
         concept_data.tags += process_tags(i)
       when 'def'
-        concept_data.defs += process_def(xmldata: i, concept_data: concept_data)
+        concept_data.defs += process_def(xmldata: i, parent: concept_data)
       when 'table'
-        concept_data.tables += [TableBuilder.build(xmldata: i, concept_data: concept_data)]
+        concept_data.tables += [TableBuilder.build(xmldata: i, parent: concept_data)]
       else
         raise "[ERROR] Concept #{name} with unkown attribute: #{i.name}"
       end
@@ -48,7 +48,7 @@ module ConceptBuilder
 
   def self.process_def(args)
     xmldata = args[:xmldata]
-    concept_data = args[:concept_data]
+    concept_data = args[:parent]
     type = xmldata.attributes['type']
     if type == 'image_url' or type == 'file' or type.nil?
       value = xmldata.text.strip

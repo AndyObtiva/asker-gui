@@ -8,7 +8,7 @@ require_relative 'template_builder'
 module TableBuilder
   def self.build(args)
     xmldata = args[:xmldata]
-    parent = args[:concept_data]
+    parent = args[:parent]
     fields = xmldata.attributes['fields'].to_s.strip.split(',')
     fields.each(&:strip!)
     fields = fields || []
@@ -18,9 +18,9 @@ module TableBuilder
       sequence = xmldata.attributes['sequence'].to_s.strip
     end
 
-    table_data = TableData.new(fields: fields,
-                               sequence: sequence,
-                               parent: parent)
+    table_data = TableData.new(parent: parent,
+                               fields: fields,
+                               sequence: sequence)
     rows, templates = read_data_from_xml(xmldata: xmldata, parent: table_data)
     table_data.rows = rows
     table_data.templates = templates

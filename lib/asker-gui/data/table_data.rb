@@ -1,5 +1,6 @@
 
 class TableData
+  attr_accessor :parent
   attr_accessor :fields
   attr_accessor :sequence
   attr_accessor :rows
