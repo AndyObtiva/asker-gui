@@ -25,6 +25,15 @@ class TableBuilderTest < Minitest::Test
       </table>
     }
     @xmldata2 = REXML::Document.new(content2).root
+
+    content3 = %q{
+      <table fields="name" sequence="steps">
+        <row>step1</row>
+        <row>step2</row>
+        <row>step3</row>
+      </table>
+    }
+    @xmldata3 = REXML::Document.new(content3).root
   end
 
   def test_table1
@@ -62,6 +71,26 @@ class TableBuilderTest < Minitest::Test
     assert_equal 2, t.rows[0].cols.size
 
     assert_equal t, t.rows[0].parent
+  end
+
+  def test_table3
+    t = TableBuilder.build(xmldata: @xmldata3, parent: 'concept3')
+
+    assert_equal 'concept3', t.parent
+    assert_equal 1, t.fields.size
+    assert_equal 'name', t.fields[0]
+    assert_equal 'steps', t.sequence
+
+    assert_equal 3, t.rows.size
+    assert_equal 'step1', t.rows[0].cols[0]
+    assert_equal 'step2', t.rows[1].cols[0]
+    assert_equal 'step3', t.rows[2].cols[0]
+
+    assert_equal 1, t.rows[0].cols.size
+
+    assert_equal t, t.rows[0].parent
+    assert_equal t, t.rows[1].parent
+    assert_equal t, t.rows[2].parent
   end
 
 end
