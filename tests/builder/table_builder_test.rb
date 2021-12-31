@@ -33,6 +33,7 @@ class TableBuilderTest < Minitest::Test
     assert_equal 'concept1', t.parent
     assert_equal 1, t.fields.size
     assert_equal 'starwars characters', t.fields[0]
+    assert_equal 0, t.sequence.size
 
     assert_equal 2, t.rows.size
     assert_equal 'Obiwan', t.rows[0].cols[0]
@@ -43,6 +44,24 @@ class TableBuilderTest < Minitest::Test
 
     assert_equal t, t.rows[0].parent
     assert_equal t, t.rows[1].parent
+  end
+
+  def test_table2
+    t = TableBuilder.build(xmldata: @xmldata2, parent: 'concept2')
+
+    assert_equal 'concept2', t.parent
+    assert_equal 2, t.fields.size
+    assert_equal 'attribute', t.fields[0]
+    assert_equal 'value', t.fields[1]
+    assert_equal 0, t.sequence.size
+
+    assert_equal 1, t.rows.size
+    assert_equal 'race', t.rows[0].cols[0]
+    assert_equal 'human', t.rows[0].cols[1]
+
+    assert_equal 2, t.rows[0].cols.size
+
+    assert_equal t, t.rows[0].parent
   end
 
 end
