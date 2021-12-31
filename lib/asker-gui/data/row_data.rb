@@ -1,5 +1,6 @@
 
 class RowData
+  attr_accessor :parent
   attr_accessor :cols
 
   def initialize(args)
