@@ -1,5 +1,6 @@
 
 class ConceptData
+  attr_accessor :parent
   attr_accessor :names
   attr_accessor :tags
   attr_accessor :defs
