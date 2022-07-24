@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/new/asker/gui/version"
+require_relative "lib/asker/gui/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "new-asker-gui"
-  spec.version = New::Asker::Gui::VERSION
+  spec.name = "asker-gui"
+  spec.version = Asker::Gui::VERSION
   spec.authors = ["David Vargas"]
   spec.email = ["dvarrui@protonmail.com"]
 
