@@ -6,36 +6,41 @@ module Asker
   module GUI
     class Window
       include Glimmer
+      attr_accessor :filepath
 
       def initialize
       end
 
-      def create_entry
-        e = entry {
-          stretchy true
+      def create_form
+        form {
+          stretchy false
+          entry {
+            label 'Filepath'
+            text <=> [self, :filepath]
+          }
         }
-        return e
       end
 
-      def create_button(e)
+      def create_button
         button('Button') {
-          stretchy true
+          stretchy false
           on_clicked do
-            text = e.text
-            msg_box('You entered', text)
+            msg_box('You entered', @filepath)
           end
         }
       end
 
       def launch
-        window('Asker GUI', 500, 300) {
-          vertical_box {
+        window('Asker GUI') { |w|
+          # margined true
+
+          #vertical_box {
             horizontal_box {
-              e = create_entry
-              create_button(e)
+              create_form
+              create_button
             }
-            non_wrapping_multiline_entry
-          }
+            #non_wrapping_multiline_entry
+          #}
 
           on_closing do
             puts 'Bye Bye'
