@@ -1,8 +1,9 @@
 
 `(Under construction!!!)`
+
 # ASKER GUI
 
-`asker-gui` gem, graphical front end for `asker-tool`gem.
+Graphical front end for `asker-tool`gem.
 
 # Description
 
@@ -24,25 +25,6 @@
 
 * **Email**: `teuton.software@protonmail.com`
 
-# New::Asker::Gui
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/new/asker/gui`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add new-asker-gui
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install new-asker-gui
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
@@ -52,4 +34,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/new-asker-gui.
+Bug reports and pull requests are welcome on GitHub at https://github.com/dvarrui/asker-gui.
+
