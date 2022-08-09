@@ -4,13 +4,13 @@ require_relative "lib/asker/gui/version"
 
 Gem::Specification.new do |spec|
   spec.name = "asker-gui"
-  spec.version = Asker::Gui::VERSION
+  spec.version = Asker::GUI::VERSION
   spec.authors = ["David Vargas"]
   spec.email = ["dvarrui@protonmail.com"]
 
   spec.summary = "GUI front end for Asker tool."
   spec.description = "GUI front end for Asker tool."
-  spec.homepage = Asker::Gui::HOMEPAGE
+  spec.homepage = Asker::GUI::HOMEPAGE
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
