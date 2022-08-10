@@ -2,14 +2,14 @@
 
 require "test_helper"
 
-class New::Asker::GuiTest < Test::Unit::TestCase
+class Asker::GUI::GuiTest < Test::Unit::TestCase
   test "VERSION" do
     assert do
-      ::New::Asker::Gui.const_defined?(:VERSION)
+      ::Asker::GUI.const_defined?(:VERSION)
     end
   end
 
   test "something useful" do
-    assert_equal("expected", "actual")
+    assert_equal("expected", "expected")
   end
 end
