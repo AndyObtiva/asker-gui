@@ -11,6 +11,28 @@ module Asker
       def initialize
       end
 
+      def create_maplist
+        data = [
+          %w[cat.haml open],
+          %w[dog.xml open],
+          %w[chicken.xml open],
+          %w[horse.haml open],
+          %w[cow.haml open]
+        ]
+
+        horizontal_box {
+          table {
+            text_column('Filename')
+            button_column('Action')
+            cell_rows data
+
+            on_edited do |row, row_data| # only fires on direct table editing
+              puts "Row #{row} edited: #{row_data}"
+            end
+          }
+        }
+      end
+
       def create_form
         vertical_box {
           horizontal_box {
@@ -41,11 +63,9 @@ module Asker
       def launch
         window('Asker GUI', 500, 300) { |w|
           tab {
-            tab_item("Maps") {}
+            tab_item("Maps") { create_maplist }
             tab_item("Concepts") {}
-            tab_item("Concept#name") {
-              create_form
-            }
+            tab_item("Concept#name") { create_form }
           }
 
           on_closing do
