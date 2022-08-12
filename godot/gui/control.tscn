@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://gui/control.gd" type="Script" id=1]
+
+[node name="control" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panel" type="Panel" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="path" type="Label" parent="panel"]
+margin_left = 35.0
+margin_top = 17.0
+margin_right = 813.0
+margin_bottom = 31.0
+text = "/home/david/proy/repos/asker.d/asker-inputs/es/edad.18-99/inf/sistemas.2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="item_list" type="ItemList" parent="panel"]
+margin_left = 28.0
+margin_top = 43.0
+margin_right = 271.0
+margin_bottom = 571.0
+
+[node name="text_label" type="RichTextLabel" parent="panel"]
+margin_left = 296.0
+margin_top = 48.0
+margin_right = 999.0
+margin_bottom = 563.0
+text = "Esto es un texto.
+enriquecddo de prueba.
+"
+
+[node name="refresh" type="Button" parent="panel"]
+margin_left = 684.0
+margin_top = 16.0
+margin_right = 760.0
+margin_bottom = 36.0
+text = "Refresh"
+
+[connection signal="pressed" from="panel/refresh" to="." method="_on_refresh_pressed"]
